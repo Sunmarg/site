@@ -1,0 +1,27 @@
+$(function(){    
+    var mySwiper = $('.swiper-container').swiper({
+		loop: 			true,
+		slidesPerView:	5
+	  });
+	  
+	$('.arrow-left').on('click', function(e){
+		e.preventDefault();
+		mySwiper.swipePrev();
+	});
+	$('.arrow-right').on('click', function(e){
+		e.preventDefault();
+		mySwiper.swipeNext();
+	});
+	
+	$(window).bind('resize', function() {changepush();});
+	function changepush(){
+		if($(window).width() < 400){
+			mySwiper.params.slidesPerView = 2;
+		} else if($(window).width() < 950){
+			mySwiper.params.slidesPerView = 3;
+		} else {
+			mySwiper.params.slidesPerView = 5;
+		}
+		mySwiper.reInit();
+	}
+});

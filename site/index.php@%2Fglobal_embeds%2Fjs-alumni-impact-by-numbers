@@ -1,0 +1,13 @@
+$(document).ready(function(){
+	$('.alumniBox').on('click', function(){
+		$('.alumniImpactListWiget.alumniBoxWrapper').not($(this).parent()).fadeOut();
+		$('#'+$(this).attr('data-url_title')).fadeIn();
+		return false;
+	});
+	
+	$('.detailBox .close').on('click', function(){
+		$('#'+$(this).attr('data-url_title')).fadeOut();
+		$('.alumniImpactListWiget.alumniBoxWrapper').not($('.alumniImpactListWiget.alumniBoxWrapper.'+$(this).attr('data-url_title'))).fadeIn();
+		return false;
+	});
+});

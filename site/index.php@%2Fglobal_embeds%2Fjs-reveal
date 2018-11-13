@@ -1,0 +1,19 @@
+$(function() {
+	$('.app-folders-container').appFolders({
+		opacity: 1,
+		instaSwitch: true,
+		animationSpeed: 500
+	});
+	$('.icon-close').on('click',function(e) {
+		$('.folder').removeClass('active-tool');
+		$(this).closest('.folderContent ').slideUp();
+		console.log($(this).closest('.folderContent ').prev('.folder').html());
+		e.preventDefault();
+	});
+	
+	$('.gallery-browser').on('click',function(e) {
+		if($(this).attr('data-id')>=0){$('.folder').eq($(this).attr('data-id')).trigger('click');}
+		e.preventDefault();
+	});
+
+});

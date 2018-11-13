@@ -1,0 +1,26 @@
+var validator;
+$(function() {	
+	
+	validator = $("#subscribeNewsletter").validate({
+		rules: {
+			email: {
+				required: true,
+				email: true
+			}
+		},
+		messages: {
+			email: {
+				required: "Please enter your e-mail address",
+				email: "Please enter a valid e-mail address"
+			}
+		},
+		errorPlacement: function(error, element) {error.insertAfter("#newsletterInputGroup");},
+		submitHandler: function(form) {
+			window.open('', 'formpopup', 'width=540,resizeable,scrollbars');
+			form.target = 'formpopup';
+			form.submit();
+		},
+		errorElement: "div",
+		errorClass: "alert-danger"
+	});
+});

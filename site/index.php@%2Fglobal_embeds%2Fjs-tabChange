@@ -1,0 +1,7 @@
+$(function() {
+	$(".tabDropdown").change(function() {
+		var nT = $(this).children(':checked').attr('data-target');
+		console.log(nT);
+		$(this).parent().next('.nav-pills').find('a[href='+ nT +']').tab('show');
+	});
+});

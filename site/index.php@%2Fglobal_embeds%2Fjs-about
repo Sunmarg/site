@@ -1,0 +1,45 @@
+$(function() {
+	var wall = new freewall(".tiles-area");
+	wall.reset({
+	  selector: '.tile',
+	  cellW: 222,
+	  cellH: 222,
+	  fixSize: true,
+	  animate: true,
+	  gutterY: 0,
+	  gutterX: 0,
+	  onResize: function() {this.fitWidth();}
+	});
+	wall.fitWidth();
+	
+	$('#cat-list li a').on('click',function(e){
+		var getText = $(this).text();
+		if(getText == 'All'){
+			$(".list-updates .col-md-4").slideDown();
+		} else {
+			$(".list-updates .col-md-4").fadeOut();
+			$(".list-updates small:contains("+getText+")").parents('.col-md-4').fadeIn();
+		}
+		
+		// add class "active" to current filter item
+		$('#cat-list li').removeClass('active');
+		$(this).parent('li').addClass('active');
+		
+		// prevent the page scrolling to the top of the screen
+		e.preventDefault();
+		
+	});
+});
+
+// Function to create a distinct list from array
+function distinctList(inputArray){
+	var i;
+	var length = inputArray.length;
+	var outputArray = [];
+	var temp = {};
+	for (i = 0; i < length; i++) {
+		temp[inputArray[i]] = 0;
+    }
+    for (i in temp) {outputArray.push(i);}
+	return outputArray;
+}

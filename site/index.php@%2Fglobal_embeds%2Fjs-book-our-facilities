@@ -1,0 +1,70 @@
+var validator;
+$(function() {
+	$( "#daterequested" ).datepicker();
+	
+	Recaptcha.create("6LfyB_YSAAAAAEmuvGtkIiIiGSw4DJQSyY9rRywv", 'recaptcha_div', {
+	     theme: "clean",
+	     callback: function(){$("#submit").removeAttr("disabled");}
+	});
+	
+	validator = $("#bookOurFacilities").validate({
+		rules: {
+			name: "required",
+			email: {
+				required: true,
+				email: true
+			},
+			phone: {
+				telephone: true
+			},
+			daterequested: "required",
+			purpose: "required",
+			iagree: "required",
+			recaptcha_response_field: "required"
+		},
+		messages: {
+			name: "Please enter your name",
+			email: {
+				required: "Please enter your e-mail address",
+				email: "Please enter a valid e-mail address"
+			},
+			phone: {
+				telephone: "Please enter a valid phone number"
+			},
+			daterequested: "Please enter request date",
+			purpose: "Please enter your purpose",
+			iagree: "Please accept to the terms and conditions",
+			recaptcha_response_field: "Please enter the code"
+		},
+		errorPlacement: function(error, element) {
+			 if (element.attr("name") == "recaptcha_response_field") {error.insertAfter("#recaptcha_div");} else if (element.attr("name") == "iagree") {error.insertAfter("#iagreeContainer");} else {error.insertAfter(element);}
+		},
+		submitHandler: function(form) {
+			$("#submit").attr("disabled", true);
+			$(form).ajaxSubmit({
+				dataType: 'json',
+				success: function(data){
+					if(!data.captchaStatus){
+						Recaptcha.focus_response_field();
+						validator.showErrors({"recaptcha_response_field": "Wrong code entered!"});
+					} else if(data.mailSendStatus){
+						$("#submitResponseMessage .alert-success").show();
+						$("#submitResponseMessage .alert-danger").hide();
+						$(form).trigger('reset');
+						Recaptcha.reload();
+					} else {
+						$("#submitResponseMessage .alert-success").hide();
+						$("#submitResponseMessage .alert-danger span").text(data.errorMessage);
+						$("#submitResponseMessage .alert-danger").show();
+						$(form).trigger('reset');
+						Recaptcha.reload();
+					}
+					$("#submit").removeAttr("disabled");
+				}
+			}); 
+			return false;
+		},
+		errorElement: "div",
+		errorClass: "alert-danger"
+	});
+});

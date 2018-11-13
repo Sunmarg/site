@@ -1,0 +1,7 @@
+$(function() {
+	$("#tabDropdown").change(function() {
+		var nT = $(this).children(':checked').attr('data-target');
+		console.log(nT);
+		$('.tabbed-nav a[href='+ nT +']').tab('show');
+	});
+});

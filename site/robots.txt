@@ -1,0 +1,6 @@
+# robots.txt for uwcmahindracollege.org
+User-agent: *
+Disallow: /cgi-bin/
+Disallow: /cache/
+Disallow: /recaptcha-php-1.11/
+Disallow: /PHPMailer/
